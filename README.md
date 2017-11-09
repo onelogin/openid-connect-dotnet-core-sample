@@ -37,7 +37,7 @@ Replace the `<OneLogin OIDC Client ID>` etc placeholders with your own values fr
 Don't hardcode these values in `Startup.cs`. Use config file instead, this was done just
 to demonstrate where you should put them.
 
-This will enable a `/signin-oidc` endpoint in the app which you will use for you OpenId Connect app.
+This will enable a `/signin-oidc` endpoint in the app which you will use as the Redirect Uri when configuring your OneLogin OpenId Connect app.
 
 ## Setting up OpenId Connect with OneLogin
 In order to make this sample work with OneLogin you will need to create an OpenId Connect app in your OneLogin portal. See our developer docs for [more detail on how to complete this step](https://developers.onelogin.com/openid-connect).
