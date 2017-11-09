@@ -1,7 +1,7 @@
 OneLogin OpenId Connect Dotnet Core 2.0 Sample
 ==============================================
 
-This sample app demonstrates how to connect to an OpenId Connect Provider like OneLogin
+This sample app demonstrates how to connect to an OpenId Connect Provider like [OneLogin](https://www.onelogin.com)
 for user authentication.
 
 The base of the project is a Dotnet Core 2.0 MVC project that was generated via command line
@@ -59,7 +59,7 @@ npm install ngrok -g
 ngrok http 5000
 ```
 
-You will then use the Ngrok HTTP url as the Redirect Uri for your OpenId Connect
+You will then use the Ngrok HTTPS url as the Redirect Uri for your OpenId Connect
 App in OneLogin. e.g. https://2afc2196.ngrok.io/signin-oidc
 
 
