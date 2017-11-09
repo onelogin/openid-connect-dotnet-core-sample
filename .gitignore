@@ -1,0 +1,7 @@
+project.lock.json
+.DS_Store
+obj
+bin
+
+# Visual Studio Code
+.vscode
