@@ -42,6 +42,11 @@ This will enable a `/signin-oidc` endpoint in the app which you will use for you
 ## Setting up OpenId Connect with OneLogin
 In order to make this sample work with OneLogin you will need to create an OpenId Connect app in your OneLogin portal. See our developer docs for [more detail on how to complete this step](https://developers.onelogin.com/openid-connect).
 
+You will also need to make sure you configure the *Token Endpoint* for the app in OneLogin
+to use the *POST* Authentication method.
+
+![Token Endpoint Authentication Method](https://s3.amazonaws.com/onelogin-screenshots/dev_site/images/client_secret_post.png)
+
 ## Run this sample
 Pull the repo then from the command line run
 
