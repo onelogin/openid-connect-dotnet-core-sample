@@ -17,11 +17,11 @@ namespace OidcSampleApp.Controllers
     {
         // These variables are only here for visibility in the sample
         // In production you should move this to a configuration file
-        const string ONELOGIN_CLIENT_ID = "your-onelogin-api-client-id";
-        const string ONELOGIN_CLIENT_SECRET = "your-onelogin-api-client-secret";
-        const string ONELOGIN_REGION = "us or eu";
+        const string ONELOGIN_CLIENT_ID = "";
+        const string ONELOGIN_CLIENT_SECRET = "";
+        const string ONELOGIN_REGION = "us"; // us or eu
 
-        const string ONELOGIN_SUBDOMAIN = "your-onelogin-instance-subdomain";
+        const string ONELOGIN_SUBDOMAIN = "";
 
         public IActionResult Index()
         {
@@ -36,9 +36,11 @@ namespace OidcSampleApp.Controllers
             // Get the OneLogin user id for the current user
             var oneLoginUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            // Get a list of apps for this user
-            var apps = await GetAppsForUser(oneLoginUserId);
-            ViewData["Apps"] = apps;
+            if(!string.IsNullOrEmpty(ONELOGIN_CLIENT_ID) && !String.IsNullOrEmpty(ONELOGIN_CLIENT_SECRET)){
+                // Get a list of apps for this user
+                var apps = await GetAppsForUser(oneLoginUserId);
+                ViewData["Apps"] = apps;
+            }
 
             // Used for launching apps from the dashboard
             ViewData["Subdomain"] = ONELOGIN_SUBDOMAIN;

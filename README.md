@@ -1,8 +1,15 @@
 OneLogin OpenId Connect Dotnet Core 2.0 Sample
 ==============================================
 
-This sample app demonstrates how to connect to an OpenId Connect Provider like [OneLogin](https://www.onelogin.com)
+This sample app demonstrates 2 ways to connect to an OpenId Connect Provider like [OneLogin](https://www.onelogin.com)
 for user authentication.
+
+* Authorization Code flow - This is the recommended approach to OpenId Connect authentication. It will redirect the user to a secure hosted login page before returning to your app. See `Startup.cs` for configuring this approach.
+* Resource Owner / Password Grant flow - This method is reserved for trusted applications where you capture the username/password and authenticate against OneLogin without redirecting the user to a hosted login page. The main code and configuration for this is found in `Controllers/AccountController.cs`
+
+This app also includes an example of obtaining an OAuth2 `access_token` for use in accessing the [OneLogin Admin APIs](https://developers.onelogin.com/api-docs/1/getting-started/dev-overview). The `Dashboard` route in the `Controllers/HomeController.cs` demonstrates how to use that token to fetch a list of apps that are accessible by a user and then provides a way to launch the apps in `Views/Home/Dashboard.cshtml`.
+
+## Dotnet Core
 
 The base of the project is a Dotnet Core 2.0 MVC project that was generated via command line
 ```sh
@@ -66,7 +73,6 @@ ngrok http 5000
 
 You will then use the Ngrok HTTPS url as the Redirect Uri for your OpenId Connect
 App in OneLogin. e.g. https://2afc2196.ngrok.io/signin-oidc
-
 
 ## Author
 

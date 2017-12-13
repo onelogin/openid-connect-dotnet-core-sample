@@ -7,12 +7,14 @@
 <p>These are the apps that you can access</p>
 
 @{
-    @foreach (var item in ViewData["Apps"] as IEnumerable<UserApp>)
-    {
-        <div class="app-tile">
-            <a href="https://sharkbytes.onelogin.com/launch/@item.Id">
-                <img src="@item.Icon"/> @item.Name
-            </a>
-        </div>
+    if(ViewData["Apps"] != null){
+        @foreach (var item in ViewData["Apps"] as IEnumerable<UserApp>)
+        {
+            <div class="app-tile">
+                <a href="https://sharkbytes.onelogin.com/launch/@item.Id">
+                    <img src="@item.Icon"/> @item.Name
+                </a>
+            </div>
+        }
     }
 }
