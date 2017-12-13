@@ -15,6 +15,12 @@ namespace OidcSampleApp
 {
     public class Startup
     {
+        // These variables are only here for visibility in the sample
+        // In production you should move this to a configuration file
+        const string ONELOGIN_OPENID_CONNECT_CLIENT_ID = "your-onelogin-openid-connect-client-id";
+        const string ONELOGIN_OPENID_CONNECT_CLIENT_SECRET = "your-onelogin-openid-connect-client-secret";
+        const string ONELOGIN_SUBDOMAIN = "your-onelogin-instance-subdomain";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -32,14 +38,16 @@ namespace OidcSampleApp
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
             })
-            .AddCookie()
-            .AddOpenIdConnect(o =>
+            .AddCookie(options => {
+                options.LoginPath = "/Account/Login/";
+            })
+            .AddOpenIdConnect(options =>
                 {
-                    o.ClientId = "<OneLogin OIDC Client ID>";
-                    o.ClientSecret = "<OneLogin OIDC Client Secret>";
-                    o.Authority = "https://<OneLogin Subdomain>.onelogin.com/oidc";
-                    o.ResponseType = "code";
-                    o.GetClaimsFromUserInfoEndpoint = true;
+                    options.ClientId = ONELOGIN_OPENID_CONNECT_CLIENT_ID;
+                    options.ClientSecret = ONELOGIN_OPENID_CONNECT_CLIENT_SECRET;
+                    options.Authority = String.Format("https://{0}.onelogin.com/oidc", ONELOGIN_SUBDOMAIN);
+                    options.ResponseType = "code";
+                    options.GetClaimsFromUserInfoEndpoint = true;
                 }
             );
         }

@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+
+<p>These are the apps that you can access</p>
+
+@{
+    @foreach (var item in ViewData["Apps"] as IEnumerable<UserApp>)
+    {
+        <div class="app-tile">
+            <a href="https://sharkbytes.onelogin.com/launch/@item.Id">
+                <img src="@item.Icon"/> @item.Name
+            </a>
+        </div>
+    }
+}
