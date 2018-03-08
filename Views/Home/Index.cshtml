@@ -2,7 +2,7 @@
     ViewData["Title"] = "OpenId Connect Demo";
 }
 
-<h1>OneLogin Authentication Methods</h1>
+<h1>OneLogin OpenId Connect</h1>
 <p>
     This is a demo site that makes use of OneLogins OpenId Connect provider to enable user authentication.
 </p>
@@ -11,14 +11,14 @@
     provide sign in links for customers that want to create their own login portal
 </p>
 
-<h3>Login using OpenId Connect Authorization Flow</h3>
+<h3>Login using Authorization Flow</h3>
 <p>
     This is the default authentication method in this sample app. It will redirect the user to your
     OneLogin customized login page for authentication and then return them to a secured dashboard page.
 </p>
 <p><a href="/home/dashboard">Login with Redirect</a></p>
 
-<h3>Login with a Username &amp; Password</h3>
+<h3>Login using Resource Owner Password Grant</h3>
 <p>
     This should only be used for trusted apps as it lets you capture username/password and
     authenticate against OneLogin without redirecting the browser.

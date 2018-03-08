@@ -31,10 +31,10 @@ namespace OidcSampleApp.Controllers
         [Authorize]
         public async Task<IActionResult> Dashboard()
         {
-            ViewData["Message"] = "This is a secured dashboard";
-
             // Get the OneLogin user id for the current user
             var oneLoginUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            ViewData["Username"] = User.FindFirstValue(ClaimTypes.Name);
 
             if(!string.IsNullOrEmpty(ONELOGIN_CLIENT_ID) && !String.IsNullOrEmpty(ONELOGIN_CLIENT_SECRET)){
                 // Get a list of apps for this user
