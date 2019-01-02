@@ -49,6 +49,8 @@ This will enable a `/signin-oidc` endpoint in the app which you will use as the 
 ## Setting up OpenId Connect with OneLogin
 In order to make this sample work with OneLogin you will need to create an OpenId Connect app in your OneLogin portal. See our developer docs for [more detail on how to complete this step](https://developers.onelogin.com/openid-connect).
 
+Make sure you add `http://localhost:5000/signin-oidc` as an allowed Redirect URI on your OIDC app configuration tab.
+
 You will also need to make sure you configure the **Token Endpoint** for the app in OneLogin
 to use the **POST** Authentication method.
 
@@ -62,17 +64,7 @@ dotnet restore
 dotnet run
 ```
 
-## Using Ngrok
-In order to test end to end you need to expose this project to the internet.
-Do this using ngrok which can be easily downloaded using NPM.
-
-```sh
-npm install ngrok -g
-ngrok http 5000
-```
-
-You will then use the Ngrok HTTPS url as the Redirect Uri for your OpenId Connect
-App in OneLogin. e.g. https://2afc2196.ngrok.io/signin-oidc
+Browse to [http://localhost:5000](http://localhost:5000)
 
 ## Author
 
