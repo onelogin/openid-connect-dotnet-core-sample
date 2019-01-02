@@ -19,7 +19,6 @@ namespace OidcSampleApp
         // In production you should move this to a configuration file
         const string ONELOGIN_OPENID_CONNECT_CLIENT_ID = "your-onelogin-openid-connect-client-id";
         const string ONELOGIN_OPENID_CONNECT_CLIENT_SECRET = "your-onelogin-openid-connect-client-secret";
-        const string ONELOGIN_SUBDOMAIN = "your-onelogin-instance-subdomain";
 
         public Startup(IConfiguration configuration)
         {
@@ -45,7 +44,10 @@ namespace OidcSampleApp
                 {
                     options.ClientId = ONELOGIN_OPENID_CONNECT_CLIENT_ID;
                     options.ClientSecret = ONELOGIN_OPENID_CONNECT_CLIENT_SECRET;
-                    options.Authority = String.Format("https://{0}.onelogin.com/oidc", ONELOGIN_SUBDOMAIN);
+
+                    // For EU Authority use: "https://openid-connect-eu.onelogin.com/oidc";
+                    options.Authority = "https://openid-connect.onelogin.com/oidc";
+
                     options.ResponseType = "code";
                     options.GetClaimsFromUserInfoEndpoint = true;
                 }

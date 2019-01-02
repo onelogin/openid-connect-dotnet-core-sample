@@ -22,7 +22,7 @@ namespace OidcSampleApp.Controllers
       // In production you should move this to a configuration file
       const string ONELOGIN_OPENID_CONNECT_CLIENT_ID = "your-onelogin-openid-connect-client-id";
       const string ONELOGIN_OPENID_CONNECT_CLIENT_SECRET = "your-onelogin-openid-connect-client-secret";
-      const string ONELOGIN_SUBDOMAIN = "your-onelogin-instance-subdomain";
+      const string ONELOGIN_OIDC_REGION = "openid-connect"; // For EU us openid-connect-eu
 
       [HttpGet]
       [AllowAnonymous]
@@ -97,7 +97,7 @@ namespace OidcSampleApp.Controllers
               new KeyValuePair<string, string>("scope", "openid profile email")
           });
 
-          var uri = String.Format("https://{0}.onelogin.com/oidc/token", ONELOGIN_SUBDOMAIN);
+          var uri = String.Format("https://{0}.onelogin.com/oidc/token", ONELOGIN_OIDC_REGION);
 
           var res = await client.PostAsync(uri, formData);
 
@@ -127,7 +127,7 @@ namespace OidcSampleApp.Controllers
               new KeyValuePair<string, string>("client_secret", ONELOGIN_OPENID_CONNECT_CLIENT_SECRET)
           });
 
-          var uri = String.Format("https://{0}.onelogin.com/oidc/token/revocation", ONELOGIN_SUBDOMAIN);
+          var uri = String.Format("https://{0}.onelogin.com/oidc/token/revocation", ONELOGIN_OIDC_REGION);
 
           var res = await client.PostAsync(uri, formData);
 
@@ -141,7 +141,7 @@ namespace OidcSampleApp.Controllers
 
           client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
-          var uri = String.Format("https://{0}.onelogin.com/oidc/me", ONELOGIN_SUBDOMAIN);
+          var uri = String.Format("https://{0}.onelogin.com/oidc/me", ONELOGIN_OIDC_REGION);
 
           var res = await client.GetAsync(uri);
 
