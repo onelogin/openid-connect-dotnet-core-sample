@@ -21,20 +21,25 @@ You will find the majority of the important code in [Startup.cs](Startup.cs) whi
 ```csharp
 ...
 
-  services.AddAuthentication(options => {
-      options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-      options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
-  })
-  .AddCookie()
-  .AddOpenIdConnect(o =>
-      {
-          o.ClientId = "<OneLogin OIDC Client ID>";
-          o.ClientSecret = "<OneLogin OIDC Client Secret>";
-          o.Authority = "https://<OneLogin Subdomain>.onelogin.com/oidc";
-          o.ResponseType = "code";
-          o.GetClaimsFromUserInfoEndpoint = true;
-      }
-  );
+    services.AddAuthentication(options => {
+        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+    })
+    .AddCookie(options => {
+        options.LoginPath = "/Account/Login/";
+    })
+    .AddOpenIdConnect(options =>
+        {
+            options.ClientId = ONELOGIN_OPENID_CONNECT_CLIENT_ID;
+            options.ClientSecret = ONELOGIN_OPENID_CONNECT_CLIENT_SECRET;
+
+            // For EU Authority use: "https://openid-connect-eu.onelogin.com/oidc";
+            options.Authority = "https://openid-connect.onelogin.com/oidc";
+
+            options.ResponseType = "code";
+            options.GetClaimsFromUserInfoEndpoint = true;
+        }
+    );
 
 ...
 ```
