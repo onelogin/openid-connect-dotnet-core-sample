@@ -1,5 +1,4 @@
-OneLogin OpenId Connect Dotnet Core 2.0 Sample
-==============================================
+# OneLogin OpenId Connect Dotnet Core 3.0 Sample
 
 This sample app demonstrates 2 ways to connect to an OpenId Connect Provider like [OneLogin](https://www.onelogin.com)
 for user authentication.
@@ -12,6 +11,7 @@ This app also includes an example of obtaining an OAuth2 `access_token` for use 
 ## Dotnet Core
 
 The base of the project is a Dotnet Core 2.0 MVC project that was generated via command line
+
 ```sh
 dotnet new mvc --auth None --name OidcSampleApp
 ```
@@ -30,11 +30,9 @@ You will find the majority of the important code in [Startup.cs](Startup.cs) whi
     })
     .AddOpenIdConnect(options =>
         {
-            options.ClientId = ONELOGIN_OPENID_CONNECT_CLIENT_ID;
-            options.ClientSecret = ONELOGIN_OPENID_CONNECT_CLIENT_SECRET;
-
-            // For EU Authority use: "https://openid-connect-eu.onelogin.com/oidc";
-            options.Authority = "https://openid-connect.onelogin.com/oidc";
+            options.ClientId = Configuration["oidc:clientid"];
+            options.ClientSecret = Configuration["oidc:clientsecret"];
+            options.Authority = String.Format("https://{0}.onelogin.com/oidc", Configuration["oidc:region"]);
 
             options.ResponseType = "code";
             options.GetClaimsFromUserInfoEndpoint = true;
@@ -44,14 +42,23 @@ You will find the majority of the important code in [Startup.cs](Startup.cs) whi
 ...
 ```
 
-Replace the `<OneLogin OIDC Client ID>` etc placeholders with your own values from OneLogin.
-
-Don't hardcode these values in `Startup.cs`. Use config file instead, this was done just
-to demonstrate where you should put them.
-
 This will enable a `/signin-oidc` endpoint in the app which you will use as the Redirect Uri when configuring your OneLogin OpenId Connect app.
 
+## Customizing your configuratiion
+
+Per the [ASP.NET Configuration documentation](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration), put `oidc:clientid` and `oidc:clientsecret` in your application configuration.
+
+### Using the secret store for configuration (recommended)
+
+Because `oidc:clientid` and `oidc:clientsecret` are application secrets, we recommend NOT putting them in files that might accidentally be checked into version control (your `appsettings*.json` files.)
+
+The [Secret Manager](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets) is our recommended approach:
+
+1. Set your Client ID using the command `dotnet user-secrets set "oidc:clientid" "your-client-id"`
+1. Set your Client Secret using the command `dotnet user-secrets set "oidc:clientsecret" "your-client-secret"`
+
 ## Setting up OpenId Connect with OneLogin
+
 In order to make this sample work with OneLogin you will need to create an OpenId Connect app in your OneLogin portal. See our developer docs for [more detail on how to complete this step](https://developers.onelogin.com/openid-connect).
 
 Make sure you add `http://localhost:5000/signin-oidc` as an allowed Redirect URI on your OIDC app configuration tab.
@@ -62,10 +69,10 @@ to use the **POST** Authentication method.
 ![Token Endpoint Authentication Method](https://s3.amazonaws.com/onelogin-screenshots/dev_site/images/client_secret_post.png)
 
 ## Run this sample
+
 Pull the repo then from the command line run
 
 ```sh
-dotnet restore
 dotnet run
 ```
 

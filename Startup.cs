@@ -15,11 +15,6 @@ namespace OidcSampleApp
 {
     public class Startup
     {
-        // These variables are only here for visibility in the sample
-        // In production you should move this to a configuration file
-        const string ONELOGIN_OPENID_CONNECT_CLIENT_ID = "your-onelogin-openid-connect-client-id";
-        const string ONELOGIN_OPENID_CONNECT_CLIENT_SECRET = "your-onelogin-openid-connect-client-secret";
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -42,16 +37,16 @@ namespace OidcSampleApp
             })
             .AddOpenIdConnect(options =>
                 {
-                    options.ClientId = ONELOGIN_OPENID_CONNECT_CLIENT_ID;
-                    options.ClientSecret = ONELOGIN_OPENID_CONNECT_CLIENT_SECRET;
-
-                    // For EU Authority use: "https://openid-connect-eu.onelogin.com/oidc";
-                    options.Authority = "https://openid-connect.onelogin.com/oidc";
+                    options.ClientId = Configuration["oidc:clientid"];
+                    options.ClientSecret = Configuration["oidc:clientsecret"];
+                    options.Authority = String.Format("https://{0}.onelogin.com/oidc", Configuration["oidc:region"]);
 
                     options.ResponseType = "code";
                     options.GetClaimsFromUserInfoEndpoint = true;
                 }
             );
+
+            services.Configure<OidcOptions>(Configuration.GetSection("oidc"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
