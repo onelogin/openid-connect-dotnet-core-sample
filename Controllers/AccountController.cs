@@ -14,15 +14,17 @@ using System.Security.Claims;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Options;
 
 namespace OidcSampleApp.Controllers
 {    public class AccountController : Controller
     {
-      // These variables are only here for visibility in the sample
-      // In production you should move this to a configuration file
-      const string ONELOGIN_OPENID_CONNECT_CLIENT_ID = "your-onelogin-openid-connect-client-id";
-      const string ONELOGIN_OPENID_CONNECT_CLIENT_SECRET = "your-onelogin-openid-connect-client-secret";
-      const string ONELOGIN_OIDC_REGION = "openid-connect"; // For EU us openid-connect-eu
+        private IOptions<OidcOptions> options;
+
+      public AccountController(IOptions<OidcOptions> options)
+      {
+        this.options = options;
+      }
 
       [HttpGet]
       [AllowAnonymous]
@@ -91,13 +93,13 @@ namespace OidcSampleApp.Controllers
           {
               new KeyValuePair<string, string>("username", username),
               new KeyValuePair<string, string>("password", password),
-              new KeyValuePair<string, string>("client_id", ONELOGIN_OPENID_CONNECT_CLIENT_ID),
-              new KeyValuePair<string, string>("client_secret", ONELOGIN_OPENID_CONNECT_CLIENT_SECRET),
+              new KeyValuePair<string, string>("client_id", options.Value.ClientId),
+              new KeyValuePair<string, string>("client_secret", options.Value.ClientSecret),
               new KeyValuePair<string, string>("grant_type", "password"),
               new KeyValuePair<string, string>("scope", "openid profile email")
           });
 
-          var uri = String.Format("https://{0}.onelogin.com/oidc/token", ONELOGIN_OIDC_REGION);
+          var uri = String.Format("https://{0}.onelogin.com/oidc/token", options.Value.Region);
 
           var res = await client.PostAsync(uri, formData);
 
@@ -123,11 +125,11 @@ namespace OidcSampleApp.Controllers
           {
               new KeyValuePair<string, string>("token", accessToken),
               new KeyValuePair<string, string>("token_type_hint", "access_token"),
-              new KeyValuePair<string, string>("client_id", ONELOGIN_OPENID_CONNECT_CLIENT_ID),
-              new KeyValuePair<string, string>("client_secret", ONELOGIN_OPENID_CONNECT_CLIENT_SECRET)
+              new KeyValuePair<string, string>("client_id", options.Value.ClientId),
+              new KeyValuePair<string, string>("client_secret", options.Value.ClientSecret)
           });
 
-          var uri = String.Format("https://{0}.onelogin.com/oidc/token/revocation", ONELOGIN_OIDC_REGION);
+          var uri = String.Format("https://{0}.onelogin.com/oidc/token/revocation", options.Value.Region);
 
           var res = await client.PostAsync(uri, formData);
 
@@ -141,7 +143,7 @@ namespace OidcSampleApp.Controllers
 
           client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
-          var uri = String.Format("https://{0}.onelogin.com/oidc/me", ONELOGIN_OIDC_REGION);
+          var uri = String.Format("https://{0}.onelogin.com/oidc/me", options.Value.Region);
 
           var res = await client.GetAsync(uri);
 
