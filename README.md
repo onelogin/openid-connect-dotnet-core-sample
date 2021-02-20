@@ -1,4 +1,4 @@
-# OneLogin OpenId Connect Dotnet Core 3.0 Sample
+# OneLogin OpenId Connect Dotnet 5.0 Sample
 
 This sample app demonstrates 2 ways to connect to an OpenId Connect Provider like [OneLogin](https://www.onelogin.com)
 for user authentication.
