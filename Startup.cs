@@ -39,7 +39,7 @@ namespace OidcSampleApp
                 {
                     options.ClientId = Configuration["oidc:clientid"];
                     options.ClientSecret = Configuration["oidc:clientsecret"];
-                    options.Authority = String.Format("https://{0}.onelogin.com/oidc", Configuration["oidc:region"]);
+                    options.Authority = String.Format("https://{0}.onelogin.com/oidc/2", Configuration["oidc:region"]);
 
                     options.ResponseType = "code";
                     options.GetClaimsFromUserInfoEndpoint = true;
